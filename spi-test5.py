@@ -8,21 +8,12 @@
 import spi
 from time import sleep
 
-SLEEPTIME=2
 #At the beginning of the program open up the SPI port.
-#this is port /dev/spidevX.Y
-#Being called as as spi.SPI(X,Y)
-#a = spi.SPI(0,0)
-
-
-#spi.initialize()
-
 status = spi.openSPI(speed=5000000)
 print "SPI configuration = ", status
 # print "PY: initialising SPI mode, reading data, reading length . . . \n"
 
-pixels = 408
-
+pixels = 416
 
 class display(object):
    def __init__(self, pixels):
@@ -47,20 +38,36 @@ class display(object):
       self.green = [0] * pixels
       self.blue = [0] * pixels
 
-d = display(408)
+d = display(416)
+
+for i in range(6):
+  d.setall(255, 0, 0)
+  d.update()
+  sleep(.1)
+  d.clear()
+  d.update()
+  sleep(.1)
+
+FADETIME=.04
 
 while 1:
-   d.setall(0, 255, 0)
-   d.update()
-   sleep(1)
-   d.setall(255, 0, 0)
-   d.update()
-   sleep(1)
-   d.clear()
-   d.update()
-   sleep(1)
+  sleep(.005)
+  for bcolor in xrange(0, 90, 2):
+     sleep(FADETIME)
+     for rcolor in xrange(0, 255, 5):
+       sleep(FADETIME)
+       for gcolor in xrange(0, 255, 10):
+         d.setall(rcolor, gcolor , bcolor)
+         d.update()
+         sleep(FADETIME)
+     sleep(.02)
+  for bcolor in xrange(255, 0, -2):
+    sleep(FADETIME)
+    for rcolor in xrange(255, 0, -2):
+      sleep(FADETIME)
+      for gcolor in xrange(255, 0, -2):
+        d.setall(rcolor, gcolor , bcolor)
+        d.update()
+        sleep(FADETIME)
+    sleep(.02)
 
-   d.set(5, 255, 2, 50)
-   d.set(20, 0, 255, 50)
-   d.update
-   sleep(1) 

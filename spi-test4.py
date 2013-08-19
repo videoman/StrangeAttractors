@@ -17,12 +17,11 @@ SLEEPTIME=2
 
 #spi.initialize()
 
-status = spi.openSPI(speed=5000000)
+status = spi.openSPI(speed=1000000)
 print "SPI configuration = ", status
 # print "PY: initialising SPI mode, reading data, reading length . . . \n"
 
-pixels = 408
-
+pixels = 416
 
 class display(object):
    def __init__(self, pixels):
@@ -47,9 +46,12 @@ class display(object):
       self.green = [0] * pixels
       self.blue = [0] * pixels
 
-d = display(408)
+d = display(416)
 
 while 1:
+   d.clear()
+   d.update()
+   sleep(2)
    d.setall(0, 255, 0)
    d.update()
    sleep(1)
@@ -59,3 +61,12 @@ while 1:
    d.clear()
    d.update()
    sleep(1)
+   for pix in range(pixels-200):
+     d.set(pix, 255, 255, 255)
+           
+   d.set(17, 255, 255, 255)
+   d.update()
+   d.clear()
+   sleep(1)
+   d.update()
+   

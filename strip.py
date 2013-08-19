@@ -37,5 +37,3 @@ class display(object):
       self.red = [0] * pixels
       self.green = [0] * pixels
       self.blue = [0] * pixels
-
-
